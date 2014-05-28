@@ -8,9 +8,13 @@
 require 'protected/flight/Flight.php';
 require 'protected/init.php';
 
+Flight::set('flight.views.path', getenv('DOCUMENT_ROOT') . $request->base . '/protected/views');
+
 Flight::route('/', function(){
-    echo 'Welcome to TaskTracker!';
+    $arr = array();
+    $arr['jsModules'] = array('mod.taskFilter');
+    Flight::render("index",$arr,"body_content");
+    Flight::render("layout");
 });
 
 Flight::start();
-?>

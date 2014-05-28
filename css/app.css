@@ -1,0 +1,19 @@
+.category_filter {
+    margin:15px 0px 5px;
+
+}
+div.category_filter.small {
+    height:50px;
+    overflow: hidden;
+}
+
+#hide_categories,
+#more_categories {
+    display: block;
+    margin:10px 0px;
+    font-size: 13px
+}
+
+#hide_categories {
+    display: none;
+}
