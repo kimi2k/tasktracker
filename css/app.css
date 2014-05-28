@@ -17,3 +17,9 @@ div.category_filter.small {
 #hide_categories {
     display: none;
 }
+
+#addTask {
+    margin-left: -25%;
+    width: 50%;
+
+}

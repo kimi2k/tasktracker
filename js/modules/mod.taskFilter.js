@@ -13,7 +13,6 @@
             self.lessBtn = self.options.e$container.find("#hide_categories");
             self.filterBlock = self.options.e$container.find(".category_filter");
             self._bindEvents()._subscriptions();
-            self.startTimer();
             return self;
         },
 

@@ -7,6 +7,8 @@
     <link rel="stylesheet" href="/css/normalize.css"/>
     <link rel="stylesheet" href="/css/foundation.min.css"/>
     <link rel="stylesheet" href="/css/app.css"/>
+    <script src="/js/vendor/modernizr.js"></script>
+
 </head>
 <body>
 
@@ -16,6 +18,9 @@
         <div class="nav-bar right">
             <ul class="button-group">
                 <li><a href="/" class="button">Home</a></li>
+                <li><a href="#" data-reveal-id="addTask" class="button">Add task</a></li>
+                <li><a href="/statistics" class="button">Statistics</a></li>
+
             </ul>
         </div>
         <h1>TaskTracker <small>Planning it's simple</small></h1>
@@ -24,6 +29,51 @@
 </div>
 <? /* header end */?>
 
+<? //add task modal ?>
+<div id="addTask" class="reveal-modal " data-reveal>
+    <form>
+        <div class="row">
+        <h4>New task</h4>
+        </div>
+        <div class="row">
+            <div class="large-12 columns">
+                <label>Task title
+                    <input type="text" placeholder="" name="title"/>
+                </label>
+            </div>
+        </div>
+        <div class="row">
+            <div class="large-12 columns">
+                <label>Task caption
+                    <textarea placeholder="" rows="5"></textarea>
+                </label>
+            </div>
+        </div>
+        <div class="row">
+            <div class="large-4 columns">
+                <label>Time limit
+                    <input type="text" placeholder="hh:mm:ss" value="" />
+                </label>
+            </div>
+        </div>
+        <div class="row">
+            <div class="large-12 columns">
+                <label>Category
+                    <select>
+                        <option value="husker">Husker</option>
+                    </select>
+                </label>
+            </div>
+        </div>
+        <div class="row">
+            <div class="large-12 columns">
+              <button type="button">Add</button>
+            </div>
+        </div>
+
+    </form>
+</div>
+<? //end add task modal ?>
 
 
 
@@ -43,7 +93,7 @@
         <div class="panel">
             <h5>Task filter</h5>
             <form action="" method="GET" id="taskFilter">
-                <input type="text" value="<?=date('d.m.Y')?>"/>
+                <input type="text" name="date" value="<?php echo isset($_GET['date'])?$_GET['date']:date('Y.m.d')?>" id="filter_date"/>
                 <label>Categories:</label>
                 <div class="category_filter small">
                     <div> <input type="checkbox"> Name1</div>
@@ -55,18 +105,6 @@
                 <a href="javascript:void(0)" id="hide_categories">Hide</a>
                 <button class="button [tiny small large]">Find</button>
             </form>
-
-
-        </div>
-       <?/* <h5>Categories</h5>
-        <ul class="side-nav">
-            <li><a href="#">News</a></li>
-            <li><a href="#">Code</a></li>
-            <li><a href="#">Design</a></li>
-            <li><a href="#">Fun</a></li>
-            <li><a href="#">Weasels</a></li>
-        </ul> */?>
-
 
     </aside>
     <? //sidebar end ?>
@@ -83,19 +121,20 @@
             <div class="large-6 columns">
                 <ul class="inline-list right">
                     <li><a href="/">Home</a></li>
+                    <li><a href="#" data-reveal-id="addTask">Add task</a></li>
+                    <li><a href="/statistics" >Statistics</a></li>
 <!--                    <li><a href="#">Link 2</a></li>-->
 <!--                    <li><a href="#">Link 3</a></li>-->
-<!--                    <li><a href="#">Link 4</a></li>-->
                 </ul>
             </div>
         </div>
     </div>
 </footer>
-
-<script type="text/javascript" src="/js/jquery.js"></script>
-<script type="text/javascript" src="/js/jquery.ba-tinypubsub.min.js"></script>
-<script type="text/javascript" src="/js/jquery.ba-outside-events.js"></script>
-<script type="text/javascript" src="/js/handlebars.js"></script>
+<script type="text/javascript" src="/js/vendor/jquery.js"></script>
+<script type="text/javascript" src="/js/vendor/foundation.min.js"></script>
+<script type="text/javascript" src="/js/vendor/jquery.ba-tinypubsub.min.js"></script>
+<script type="text/javascript" src="/js/vendor/jquery.ba-outside-events.js"></script>
+<script type="text/javascript" src="/js/vendor/handlebars.js"></script>
 <script type="text/javascript" src="/js/app.js"></script>
 <? //modules
 if (isset($jsModules) && !empty($jsModules)) {
