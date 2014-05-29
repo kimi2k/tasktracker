@@ -21,7 +21,7 @@
             <tr>
                 <th>№</th>
                 <th class="large-3">Name</th>
-                <th>Caption</th>
+                <th>Description</th>
                 <th>Created</th>
                 <th>Time limit</th>
                 <th>Spent time</th>

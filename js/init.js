@@ -1,6 +1,6 @@
 $(document).foundation();
 var props = {};
-// init slider module at main page
+
 if( App.moduleClass( 'taskFilter' ) )
 
     App.module( 'taskFilter', 'taskFilter', {
@@ -13,8 +13,14 @@ if( App.moduleClass( 'tasklist' ) )
         e$container : $("#tasklist"),
         e$rowTpl : $("#tasklist_tpl"),
         e$filterDate : $("#filter_date"),
+        e$addTaskForm : $("#addTask"),
     });
 
+if( App.moduleClass( 'categories' ) )
+
+    App.module( 'categories', 'categories', {
+        e$addForm : $("#addCategory"),
+    });
 
 // application init.
 App.init( props );

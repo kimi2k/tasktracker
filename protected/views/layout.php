@@ -16,9 +16,10 @@
 <div class="row">
     <div class="large-12 columns">
         <div class="nav-bar right">
-            <ul class="button-group">
+            <ul class="button-group top-nav">
                 <li><a href="/" class="button">Home</a></li>
                 <li><a href="#" data-reveal-id="addTask" class="button">Add task</a></li>
+                <li><a href="#" data-reveal-id="addCategory" class="button">Add category</a></li>
                 <li><a href="/statistics" class="button">Statistics</a></li>
 
             </ul>
@@ -44,7 +45,7 @@
         </div>
         <div class="row">
             <div class="large-12 columns">
-                <label>Task caption
+                <label>Task description
                     <textarea placeholder="" rows="5"></textarea>
                 </label>
             </div>
@@ -75,6 +76,31 @@
 </div>
 <? //end add task modal ?>
 
+<? //add category modal ?>
+<div id="addCategory" class="reveal-modal " data-reveal>
+    <form>
+        <div class="row">
+            <h4>New Category</h4>
+        </div>
+        <div class="row">
+            <div class="large-12 columns">
+                <label>Category title
+                    <input type="text" placeholder="" name="title"/>
+                </label>
+                <label>Category description
+                    <input type="text" placeholder="" name="description"/>
+                </label>
+            </div>
+        </div>
+        <div class="row">
+            <div class="large-12 columns">
+                <button type="button">Add</button>
+            </div>
+        </div>
+
+    </form>
+</div>
+<? //end add category modal ?>
 
 
 <div class="row">
