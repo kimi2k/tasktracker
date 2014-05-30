@@ -27,9 +27,13 @@ class Categories
     {
         $sql = "SELECT * FROM categories";
         if ($result = $this->db->query($sql)) {
-            $list = $result->FetchAll(PDO::FETCH_ASSOC);
-            if ($list && !empty($list)) {
-                return $list;
+            $out = array();
+            while ($row = $result->Fetch(PDO::FETCH_ASSOC)) {
+                $out[$row['id']] = $row;
+            }
+
+            if ($out && !empty($out)) {
+                return $out;
             }
         }
         return false;

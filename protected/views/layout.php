@@ -46,22 +46,25 @@
         <div class="row">
             <div class="large-12 columns">
                 <label>Task description
-                    <textarea placeholder="" rows="5"></textarea>
+                    <textarea placeholder="" rows="5" name="description"></textarea>
                 </label>
             </div>
         </div>
         <div class="row">
             <div class="large-4 columns">
                 <label>Time limit
-                    <input type="text" placeholder="hh:mm:ss" value="" />
+                    <input type="text" placeholder="hh:mm:ss" value="" name="time_limit" />
                 </label>
             </div>
         </div>
         <div class="row">
             <div class="large-12 columns">
                 <label>Category
-                    <select>
-                        <option value="husker">Husker</option>
+                    <select name="category">
+                        <option value="0">Not Selected</option>
+                        <?php foreach($categories as $cat) {?>
+                        <option value="<?php echo $cat['id']?>"><?php echo $cat['title']?></option>
+                        <? }?>
                     </select>
                 </label>
             </div>
@@ -120,13 +123,14 @@
             <h5>Task filter</h5>
             <form action="" method="GET" id="taskFilter">
                 <input type="text" name="date" value="<?php echo isset($_GET['date'])?$_GET['date']:date('Y.m.d')?>" id="filter_date"/>
+                <?php if (isset($categories) && !empty($categories)):?>
                 <label>Categories:</label>
                 <div class="category_filter small">
-                    <div> <input type="checkbox"> Name1</div>
-                    <div> <input type="checkbox"> Name2</div>
-                    <div> <input type="checkbox"> Name2</div>
-                    <div> <input type="checkbox"> Name2</div>
+                    <?php foreach ($categories as $cat):?>
+                    <div> <input type="checkbox" value="<?php echo $cat['id']?>"> <?php echo $cat['title']?></div>
+                    <?php endforeach; ?>
                 </div>
+                <? endif; ?>
                 <a href="javascript:void(0)" id="more_categories">Show all</a>
                 <a href="javascript:void(0)" id="hide_categories">Hide</a>
                 <button class="button [tiny small large]">Find</button>
@@ -148,7 +152,10 @@
                 <ul class="inline-list right">
                     <li><a href="/">Home</a></li>
                     <li><a href="#" data-reveal-id="addTask">Add task</a></li>
+                    <li><a href="#" data-reveal-id="addCategory"> Add category</a></li>
+
                     <li><a href="/statistics" >Statistics</a></li>
+
 <!--                    <li><a href="#">Link 2</a></li>-->
 <!--                    <li><a href="#">Link 3</a></li>-->
                 </ul>

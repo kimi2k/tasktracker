@@ -7,9 +7,9 @@ if( App.moduleClass( 'taskFilter' ) )
         e$container : $("#taskFilter")
     });
 
-if( App.moduleClass( 'tasklist' ) )
+if( App.moduleClass( 'tasks' ) )
 
-    App.module( 'tasklist', 'tasklist', {
+    App.module( 'tasks', 'tasks', {
         e$container : $("#tasklist"),
         e$rowTpl : $("#tasklist_tpl"),
         e$filterDate : $("#filter_date"),

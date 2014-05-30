@@ -17,9 +17,13 @@ div.category_filter.small {
 #hide_categories {
     display: none;
 }
-
+#addCategory,
 #addTask {
     margin-left: -25%;
     width: 50%;
 
+}
+
+.top-nav .button {
+    padding:0.8rem 1.2rem
 }

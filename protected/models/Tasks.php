@@ -1,4 +1,5 @@
 <?php
+
 /**
  * User: Sergey Prokhorov <sergey_prokhorov@list.ru>
  * Date: 29.05.14
@@ -21,7 +22,7 @@ class Tasks
             foreach ($arFilter as $key => $val) {
                 if ($key[0] == '%') {
 
-                    $arr[] = substr($key,1,strlen($key)) . " LIKE '%" . $val . "%'";
+                    $arr[] = substr($key, 1, strlen($key)) . " LIKE '%" . $val . "%'";
                 } else {
                     $arr[] = $key . "=" . $this->db->quote($val);
                 }
@@ -37,6 +38,48 @@ class Tasks
                 return $list;
             }
         }
+    }
 
+    public function add($params)
+    {
+        $data = array();
+        foreach ($params as $key => $value) {
+            if ($value != '') {
+                $data[] .= $key . '=' . $this->db->quote($value);
+            }
+        }
+
+        $sql = "INSERT INTO tasks SET " . implode(",", $data);
+        echo $sql;
+        if ($this->db->query($sql))
+            return true;
+
+        return false;
+    }
+
+    public function delete($id)
+    {
+        $sql = "DELETE * FROM tasks WHERE id=".$this->db->quote(id)." LIMIT 1";
+        if ($this->db->query($sql)) {
+            return true;
+        }
+        return false;
+    }
+
+    public function update($id, $params)
+    {
+        unset($params['id']);
+        foreach ($params as $key => $value) {
+            if ($value != '') {
+                $data[] .= $key . '=' . $this->db->quote($value);
+            }
+        }
+
+        $sql = "UPDATE tasks SET " . implode(",", $data). " WHERE id=".$this->db->query($id);
+        if ($this->db->query($sql)){
+            return true;
+        }
+
+        return false;
     }
 }
