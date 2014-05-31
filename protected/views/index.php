@@ -1,5 +1,5 @@
 <script id="tasklist_tpl" type="text/x-handlebars-template">
-    <tr id="task_{{id}}">
+    <tr id="task_{{id}}" >
         <td>{{id}}</td>
         <td>{{name}}</td>
         <td>{{caption}}</td>
@@ -10,7 +10,7 @@
         <img src="/img/play.png" />
         <img src="/img/pause.png" />
         <img src="/img/finish_flag.png" />
-        <img src="/img/delete.png" />
+        <img src="/img/delete.png" class='delete' id="{{id}}"/>
         </td>
     </tr>
 </script>
@@ -25,6 +25,7 @@
                 <th>Created</th>
                 <th>Time limit</th>
                 <th>Spent time</th>
+                <th></th>
                 <th></th>
             </tr>
         </thead>

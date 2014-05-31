@@ -59,7 +59,9 @@ class Tasks
 
     public function delete($id)
     {
-        $sql = "DELETE * FROM tasks WHERE id=".$this->db->quote(id)." LIMIT 1";
+        $sql = "DELETE FROM tasks WHERE id=".$this->db->quote($id)." LIMIT 1";
+//        echo $sql;
+//        exit;
         if ($this->db->query($sql)) {
             return true;
         }

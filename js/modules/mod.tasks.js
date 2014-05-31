@@ -10,7 +10,8 @@
             e$container : null,
             e$rowTpl : null,
             e$filterDate : null,
-            e$addTaskForm : null
+            e$addTaskForm : null,
+            e$row : null
         },
 
         init : function() {
@@ -20,6 +21,7 @@
             self.date = self.options.e$filterDate.val().split('.').join('-');;
             self.addTaskForm = self.options.e$addTaskForm;
             self.addTaskFormBtn = self.addTaskForm.find("button");
+            self.row = self.options.e$row;
             self._bindEvents()._subscriptions().printTasks();
             return self;
         },
@@ -59,6 +61,9 @@
                     var html   = template(context);
                     self.list.append(html);
                 }
+                self.list.find("img.delete").on( 'click', function(){
+                    self.removeTask($(this));
+                });
             });
 
             return self;
@@ -96,7 +101,21 @@
             return self;
         },
 
-        removeTask : function() {
+        removeTask : function($this) {
+            name = $this.parent().parent().find("td").eq(1).html();
+            if (!confirm("Are you whant remove task '"+name+"'?")) {
+                return false;
+            }
+            p = {
+                action: 'delete',
+                id : $this.attr("id")
+            }
+            $.post("/ajax/tasks", p, function(data){
+                console.log(data);
+                if (data.error == false) {
+                    $this.parent().parent().remove();
+                }
+            })
 
         },
 

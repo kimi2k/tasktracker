@@ -39,11 +39,16 @@ Flight::route('POST /ajax/tasks', function(){
                 if ($res) {
                     Flight::json(array("error"=>false));
                 } else {
-//                    Flight::json(array("error"=>true, "errorDescription"=>'DB error'));
+                    Flight::json(array("error"=>true, "errorDescription"=>'DB error'));
                 }
                 break;
             case 'delete':
-
+                $res = $tasks->delete($_POST['id']);
+                if ($res) {
+                    Flight::json(array("error"=>false));
+                } else {
+                    Flight::json(array("error"=>true, "errorDescription"=>'DB error'));
+                }
                 break;
             case 'update':
 
