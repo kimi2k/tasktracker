@@ -27,3 +27,21 @@ div.category_filter.small {
 .top-nav .button {
     padding:0.8rem 1.2rem
 }
+#tasklist .pause {
+    display: none;
+}
+
+#tasklist tr td img {
+    width:20px;
+}
+
+
+#tasklist .finish td {
+    /*text-decoration:line-through;*/
+    background: rgb(177, 241, 177);
+}
+#tasklist .finish td .delete,
+#tasklist .finish td .finish,
+#tasklist .finish td .start {
+    display: none;
+}

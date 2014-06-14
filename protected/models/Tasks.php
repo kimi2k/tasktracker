@@ -60,8 +60,6 @@ class Tasks
     public function delete($id)
     {
         $sql = "DELETE FROM tasks WHERE id=".$this->db->quote($id)." LIMIT 1";
-//        echo $sql;
-//        exit;
         if ($this->db->query($sql)) {
             return true;
         }
@@ -83,5 +81,56 @@ class Tasks
         }
 
         return false;
+    }
+
+    public function getWorkTime($date) {
+        $sql = "SELECT * FROM tasks WHERE start LIKE '{$date}%'";
+        $result = $this->db->query($sql);
+        $total = 0;
+        if ($result) {
+           while ($day = $result->Fetch(PDO::FETCH_ASSOC)){
+               if (strtotime($day['end']) <= 0) {
+                   $end = time();
+               } else {
+                   $end = strtotime($day['end']);
+               }
+               $total += $end - strtotime($day['start']) - intval($day['paused']);
+           }
+           return $total;
+        }
+        return false;
+    }
+
+    public function startTask($id) {
+        $task = $this->db->query("SELECT * FROM tasks WHERE id=".intval($id))->Fetch(PDO::FETCH_ASSOC);
+        if (!$task['start']) {
+            $sql = "UPDATE tasks SET start='".date('Y-m-d H:i:s')."' WHERE id=".intval($id);
+            return $this->db->query($sql);
+        } elseif ($task['is_paused']==1) {
+            $paused = time()-strtotime($task['end'])+intval($task['paused']);
+            $sql = "UPDATE tasks SET end = Null, paused='{$paused}', is_paused=0 WHERE id=".intval($id);
+            return $this->db->query($sql);
+        }
+
+    }
+
+    public function pauseTask($id) {
+        $task = $this->db->query("SELECT * FROM tasks WHERE id=".intval($id))->Fetch(PDO::FETCH_ASSOC);
+        if ($task['is_paused'] != 1) {
+            $sql = "UPDATE tasks SET is_paused=1, end='".date('Y-m-d H:i:s')."' WHERE id=".intval($id);
+            $this->db->query($sql);
+        }
+    }
+
+    public function finishTask($id) {
+        $task = $this->db->query("SELECT * FROM tasks WHERE id=".intval($id))->Fetch(PDO::FETCH_ASSOC);
+        $paused = $task['paused'];
+        if ($task['is_paused'] == 1) {
+            $paused += time()-strtotime($task['end']);
+        }
+        $total = time() - strtotime($task['start']) - $paused;
+        $sql = "UPDATE tasks SET is_paused=0, end='".date('Y-m-d H:i:s')."',
+        totaltime='".$total."', paused='".$paused."', finished=1 WHERE id=".intval($id);
+        return $this->db->query($sql);
     }
 }

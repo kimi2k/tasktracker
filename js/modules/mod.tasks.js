@@ -11,7 +11,8 @@
             e$rowTpl : null,
             e$filterDate : null,
             e$addTaskForm : null,
-            e$row : null
+            e$row : null,
+            e$timerContainer : null
         },
 
         init : function() {
@@ -51,12 +52,22 @@
             $.post("/ajax/tasks",{action:'getList',created:self.date}, function(date){
                 var list = date;
                 for (x in list) {
+//                    console.log(list[x])
+                    var classes = '';
+                    if (list[x].finished == 1) {
+                        classes += ' finish'
+                    }
+                    if (list[x].finished != 1 && list[x].is_paused != 1 && list[x].start != null) {
+                           classes += ' active';
+                    }
+
                     var context = {
                         id: list[x].id,
                         name: list[x].name,
                         caption: list[x].caption,
                         created: list[x].created,
-                        timeLimit: list[x].timeLimit
+                        timeLimit: list[x].time_limit,
+                        classes : classes,
                         };
                     var html   = template(context);
                     self.list.append(html);
@@ -64,6 +75,22 @@
                 self.list.find("img.delete").on( 'click', function(){
                     self.removeTask($(this));
                 });
+                self.list.find("img.start").on( 'click', function(){
+                    self.startTask($(this).parent().parent().attr('task'));
+                });
+                self.list.find("img.pause").on( 'click', function(){
+                   self.pauseTask($(this).parent().parent().attr('task'));
+                });
+                self.list.find("img.finish").on('click', function(){
+                    self.finishTask($(this).parent().parent().attr('task'));
+                });
+
+                //checking active task
+                if (self.list.find(".active").length >0) {
+                    self.startTimer();
+                    self.list.find(".active img.pause").show();
+                    self.list.find(".active img.start").hide();
+                }
             });
 
             return self;
@@ -121,6 +148,68 @@
 
         updateTask : function() {
 
+        },
+        startTimer : function() {
+            var self = this;
+            self.task = setInterval(function(){
+                window.globalTimer.totalTime += 1;
+            },1000);
+            return self;
+        },
+        startTask : function(id) {
+            var self = this;
+            if (window.globalTimer.start == true && window.globalTimer.id != '') {
+                console.log('paused active task');
+               self.pauseTask(window.globalTimer.id);
+            }
+            window.globalTimer.start = true;
+            window.globalTimer.id = id;
+            var $task = self.list.find('.task[task='+id+']');
+            $task.addClass('active');
+
+
+            $.post('/ajax/tasks?action=start',{id:id},function(data){
+                console.log(data);
+            })
+            self.startTimer();
+            $task.find('.pause').show();
+            $task.find('.start').hide();
+
+            return self;
+
+        },
+
+        pauseTask : function(id) {
+            var self = this;
+            window.globalTimer.start = false;
+            window.globalTimer.id = true;
+            clearInterval(self.task);
+
+            $.post('/ajax/tasks?action=pause',{id:id},function(data){
+                console.log(data);
+            })
+            var $task = self.list.find('.task[task='+id+']');
+            $task.removeClass('active');
+            $task.find('.pause').hide();
+            $task.find('.start').show();
+            return self;
+        },
+
+        finishTask : function(id) {
+            var self = this;
+
+            if (confirm("Are you really want finish this №"+id)) {
+                $.post('/ajax/tasks?action=finish',{id:id},function(data){
+                    console.log(data);
+                    self.printTasks();
+                })
+                var $task = self.list.find('.task[task='+id+']');
+                $task.removeClass('active');
+                $task.find('.pause').hide();
+                $task.find('.start').hide();
+
+            }
+            return self;
         }
 
 

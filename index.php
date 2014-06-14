@@ -10,13 +10,13 @@ require 'protected/init.php';
 
 Flight::route('/', function(){
     $arr = array();
-    $arr['jsModules'] = array('mod.taskFilter', 'mod.tasks', 'mod.categories');
+    $arr['jsModules'] = array('mod.timer','mod.taskFilter', 'mod.tasks', 'mod.categories');
     Flight::register('Categories', 'Categories',array(Flight::get('db')));
-    $categories = Flight::Categories();
-    $arr['categories'] = $categories->getList();
+    $arr['categories'] = Flight::Categories()->getList();
     Flight::render("index",$arr,"body_content");
     Flight::render("layout");
 });
+
 //POST
 Flight::route('POST /ajax/tasks', function(){
 
@@ -50,8 +50,40 @@ Flight::route('POST /ajax/tasks', function(){
                     Flight::json(array("error"=>true, "errorDescription"=>'DB error'));
                 }
                 break;
-            case 'update':
-
+            case 'getworktime':
+                if (isset($_POST['date'])) {
+                    $seconds = $tasks->getWorkTime($_POST['date']);
+                    Flight::json(array('seconds'=>$seconds));
+                } else {
+                    Flight::json(array("error"=>true, "errorDescription"=>'date missing'));
+                }
+                break;
+            case 'start':
+                if (isset($_POST['id'])) {
+                    $r = $tasks->startTask($_POST['id']);
+                    Flight::json(array('result'=>$r));
+                } else {
+                    Flight::json(array("error"=>true, "errorDescription"=>'task id is missing'));
+                }
+                break;
+            case 'pause':
+                if (isset($_POST['id'])) {
+                    $r = $tasks->pauseTask($_POST['id']);
+                    Flight::json(array('result'=>$r));
+                } else {
+                    Flight::json(array("error"=>true, "errorDescription"=>'task id is missing'));
+                }
+                break;
+            case 'finish':
+                if (isset($_POST['id'])) {
+                    $r = $tasks->finishTask($_POST['id']);
+                    Flight::json(array('result'=>$r));
+                } else {
+                    Flight::json(array("error"=>true, "errorDescription"=>'task id is missing'));
+                }
+                break;
+            default:
+                Flight::json(array("error"=>true,"errorDescription"=>"Unknown action"));
                 break;
         }
     }

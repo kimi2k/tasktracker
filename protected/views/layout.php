@@ -114,10 +114,9 @@
     <? // content end ?>
     <? //sidebar start ?>
     <aside class="large-3 columns">
-<!--        <h5>Today: --><?//=date('d.m.Y')?><!--</h5>-->
         <div class="panel">
             <h5>Worked:
-           <span class="right">00:00:00</span></h5>
+           <span class="right total_timer"><span>00</span>:<span>00</span>:<span>00</span></span></h5>
         </div>
         <div class="panel">
             <h5>Task filter</h5>
@@ -164,6 +163,7 @@
     </div>
 </footer>
 <script type="text/javascript" src="/js/vendor/jquery.js"></script>
+<script type="text/javascript" src="/js/vendor/phpjs.js"></script>
 <script type="text/javascript" src="/js/vendor/foundation.min.js"></script>
 <script type="text/javascript" src="/js/vendor/jquery.ba-tinypubsub.min.js"></script>
 <script type="text/javascript" src="/js/vendor/jquery.ba-outside-events.js"></script>
