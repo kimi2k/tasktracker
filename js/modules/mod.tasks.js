@@ -48,8 +48,20 @@
             var self = this;
             var source = self.tpl.html();
             var template = Handlebars.compile(source);
+            cat_id = [];
+            self.options.e$filterDate.parent().find('input[checked="checked"]').each(function(){
+                cat_id.push($(this).val());
+            })
+            cat_id = cat_id.join(",");
             self.list.html("");
-            $.post("/ajax/tasks",{action:'getList',created:self.date}, function(date){
+            p = {action:'getList',created:self.date};
+            if (cat_id != '') {
+                p.categories = cat_id;
+            }
+
+            $.post("/ajax/tasks",p, function(date){
+                console.log(date);
+
                 var list = date;
                 for (x in list) {
                     var classes = '';
