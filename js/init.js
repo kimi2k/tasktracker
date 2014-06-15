@@ -1,10 +1,8 @@
 
 $(document).foundation();
 var props = {};
-//TODO: get total time of day
 
 window.globalTimer = {
-    day : date('Y-m-d'),
     start : false,
     totalTime : 0
 }
@@ -19,7 +17,7 @@ if (App.moduleClass('taskFilter'))
 if (App.moduleClass('timer'))
 
     App.module('timer', 'timer', {
-        e$timerContainer: window.globalTimer,
+        e$timerContainer: $("#filter_date"),
         e$totalTimer : $(".total_timer"),
     });
 

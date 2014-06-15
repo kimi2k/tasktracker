@@ -11,9 +11,10 @@
         init : function() {
             var self = this;
             self.totalTimer = self.options.e$totalTimer;
-//            window.globalTimer = self.options.e$timerContainer;
+            currentDate = self.options.e$timerContainer.val().split('.');
+            currentDate = currentDate[0] + '-'+currentDate[1]+'-'+currentDate[2];
 
-            $.post("/ajax/tasks?action=getworktime",{date: date('Y-m-d')},function(date){
+            $.post("/ajax/tasks?action=getworktime",{date: currentDate},function(date){
                 window.globalTimer.totalTime = date.seconds;
             });
 
