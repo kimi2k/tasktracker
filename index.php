@@ -42,6 +42,11 @@ Flight::route('POST /ajax/tasks', function(){
                     Flight::json(array("error"=>true, "errorDescription"=>'DB error'));
                 }
                 break;
+            case 'update':
+                $params = $_REQUEST;
+                unset($params['action']);
+                $res = $tasks->update($_REQUEST['id'], $params);
+                break;
             case 'delete':
                 $res = $tasks->delete($_POST['id']);
                 if ($res) {

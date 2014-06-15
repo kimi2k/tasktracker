@@ -42,6 +42,9 @@ div.category_filter.small {
 #tasklist .active td {
     background: lightblue;
 }
+#tasklist .expired td {
+    background: lightcoral;
+}
 #tasklist .finish td .delete,
 #tasklist .finish td .finish,
 #tasklist .finish td .start {

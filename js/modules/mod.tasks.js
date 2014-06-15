@@ -66,7 +66,8 @@
                         name: list[x].name,
                         caption: list[x].caption,
                         created: list[x].created,
-                        timeLimit: list[x].time_limit,
+                        limit: list[x].time_limit,
+                        timeLimit: generateTimer(list[x].time_limit),
                         taskTime : list[x].taskTime,
                         timer : generateTimer(list[x].taskTime),
                         classes : classes
@@ -100,10 +101,16 @@
 
         addTask : function() {
             var self = this;
+            var timeLimit = self.addTaskForm.find('input[name="time_limit"]').val().split(':');
+            if (timeLimit.length == 3) {
+                timeLimit = parseInt(timeLimit[0])*3600 + parseInt(timeLimit[1])*60 + parseInt(timeLimit[2])
+            }
+
+
             p = {},
             p.name = self.addTaskForm.find('input[name="title"]').val();
             p.caption = self.addTaskForm.find('textarea[name="description"]').val();
-            p.time_limit = self.addTaskForm.find('input[name="time_limit"]').val();
+            p.time_limit = timeLimit;
             p.cat_id = self.addTaskForm.find('select[name="category"]').val();
             error = false;
             if (p.title == '') {
@@ -153,11 +160,20 @@
             self.task = setInterval(function(){
                 window.globalTimer.totalTime += 1;
                 var $task = self.list.find('.task[task='+id+']');
-                var time = parseInt($task.attr('time'));
-                time +=1;
+                var time = parseInt($task.attr('time'))+1;
                 $task.attr('time',time);
                 $task.find('.timer').html(generateTimer(time));
-
+                var limit = parseInt($task.attr('limit'))-1;
+                $task.attr('limit',limit);
+                if (limit >= 0) {
+                    $task.find('.limit').html(generateTimer(limit));
+                    $.post("/ajax/tasks?action=update", {id:id, time_limit: limit}, function(data) {
+                        console.log(data);
+                    });
+                } else {
+                    $task.find('.limit').html('expired');
+                    $task.addClass('expired');
+                }
             },1000);
             return self;
         },

@@ -32,10 +32,11 @@ class Tasks
         if ($arOrder) {
             $sql .= " ORDER BY " . $arOrder[0] . " " . $arOrder[1];
         }
+
         if ($result = $this->db->query($sql)) {
             $list = array();
             while ($row = $result->Fetch(PDO::FETCH_ASSOC)) {
-                if (strtotime($row['end']) > 0) {
+                if (strtotime($row['start']) > 0) {
                     if (strtotime($row['end']) <= 0) {
                         $end = time();
                     } else {
@@ -82,13 +83,14 @@ class Tasks
     public function update($id, $params)
     {
         unset($params['id']);
+        $data = array();
         foreach ($params as $key => $value) {
             if ($value != '') {
                 $data[] .= $key . '=' . $this->db->quote($value);
             }
         }
 
-        $sql = "UPDATE tasks SET " . implode(",", $data). " WHERE id=".$this->db->query($id);
+        echo $sql = "UPDATE tasks SET " . implode(",", $data). " WHERE id=".$this->db->quote($id);
         if ($this->db->query($sql)){
             return true;
         }
