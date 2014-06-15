@@ -104,9 +104,9 @@
             var timeLimit = self.addTaskForm.find('input[name="time_limit"]').val().split(':');
             if (timeLimit.length == 3) {
                 timeLimit = parseInt(timeLimit[0])*3600 + parseInt(timeLimit[1])*60 + parseInt(timeLimit[2])
+            } else {
+                timeLimit = 0;
             }
-
-
             p = {},
             p.name = self.addTaskForm.find('input[name="title"]').val();
             p.caption = self.addTaskForm.find('textarea[name="description"]').val();
