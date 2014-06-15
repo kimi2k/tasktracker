@@ -33,7 +33,20 @@ class Tasks
             $sql .= " ORDER BY " . $arOrder[0] . " " . $arOrder[1];
         }
         if ($result = $this->db->query($sql)) {
-            $list = $result->FetchAll(PDO::FETCH_ASSOC);
+            $list = array();
+            while ($row = $result->Fetch(PDO::FETCH_ASSOC)) {
+                if (strtotime($row['end']) > 0) {
+                    if (strtotime($row['end']) <= 0) {
+                        $end = time();
+                    } else {
+                        $end = strtotime($row['end']);
+                    }
+                    $row['taskTime'] = $end - strtotime($row['start']) - intval($row['paused']);
+                } else {
+                    $row['taskTime'] = 0;
+                }
+                $list[$row['id']] = $row;
+            }
             if ($list && !empty($list)) {
                 return $list;
             }

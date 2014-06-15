@@ -168,6 +168,7 @@
 <script type="text/javascript" src="/js/vendor/jquery.ba-tinypubsub.min.js"></script>
 <script type="text/javascript" src="/js/vendor/jquery.ba-outside-events.js"></script>
 <script type="text/javascript" src="/js/vendor/handlebars.js"></script>
+<script type="text/javascript" src="/js/timer.js"></script>
 <script type="text/javascript" src="/js/app.js"></script>
 <? //modules
 if (isset($jsModules) && !empty($jsModules)) {

@@ -4,6 +4,7 @@ var props = {};
 //TODO: get total time of day
 
 window.globalTimer = {
+    day : date('Y-m-d'),
     start : false,
     totalTime : 0
 }

@@ -52,13 +52,13 @@
             $.post("/ajax/tasks",{action:'getList',created:self.date}, function(date){
                 var list = date;
                 for (x in list) {
-//                    console.log(list[x])
                     var classes = '';
                     if (list[x].finished == 1) {
                         classes += ' finish'
                     }
                     if (list[x].finished != 1 && list[x].is_paused != 1 && list[x].start != null) {
                            classes += ' active';
+
                     }
 
                     var context = {
@@ -67,7 +67,9 @@
                         caption: list[x].caption,
                         created: list[x].created,
                         timeLimit: list[x].time_limit,
-                        classes : classes,
+                        taskTime : list[x].taskTime,
+                        timer : generateTimer(list[x].taskTime),
+                        classes : classes
                         };
                     var html   = template(context);
                     self.list.append(html);
@@ -87,7 +89,7 @@
 
                 //checking active task
                 if (self.list.find(".active").length >0) {
-                    self.startTimer();
+                    self.startTimer(self.list.find(".active").attr("task"));
                     self.list.find(".active img.pause").show();
                     self.list.find(".active img.start").hide();
                 }
@@ -146,32 +148,35 @@
 
         },
 
-        updateTask : function() {
-
-        },
-        startTimer : function() {
+        startTimer : function(id) {
             var self = this;
             self.task = setInterval(function(){
                 window.globalTimer.totalTime += 1;
+                var $task = self.list.find('.task[task='+id+']');
+                var time = parseInt($task.attr('time'));
+                time +=1;
+                $task.attr('time',time);
+                $task.find('.timer').html(generateTimer(time));
+
             },1000);
             return self;
         },
         startTask : function(id) {
             var self = this;
             if (window.globalTimer.start == true && window.globalTimer.id != '') {
-                console.log('paused active task');
                self.pauseTask(window.globalTimer.id);
             }
+
             window.globalTimer.start = true;
             window.globalTimer.id = id;
+
             var $task = self.list.find('.task[task='+id+']');
             $task.addClass('active');
 
 
             $.post('/ajax/tasks?action=start',{id:id},function(data){
-                console.log(data);
             })
-            self.startTimer();
+            self.startTimer(id);
             $task.find('.pause').show();
             $task.find('.start').hide();
 
@@ -198,7 +203,7 @@
         finishTask : function(id) {
             var self = this;
 
-            if (confirm("Are you really want finish this №"+id)) {
+            if (confirm("Are you really want finish task №"+id)) {
                 $.post('/ajax/tasks?action=finish',{id:id},function(data){
                     console.log(data);
                     self.printTasks();

@@ -37,11 +37,21 @@ div.category_filter.small {
 
 
 #tasklist .finish td {
-    /*text-decoration:line-through;*/
     background: rgb(177, 241, 177);
+}
+#tasklist .active td {
+    background: lightblue;
 }
 #tasklist .finish td .delete,
 #tasklist .finish td .finish,
 #tasklist .finish td .start {
     display: none;
+}
+
+
+#tasklist  td .delete,
+#tasklist  td .finish,
+#tasklist  td .pause,
+#tasklist  td .start {
+    cursor: pointer;
 }

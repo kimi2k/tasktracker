@@ -1,11 +1,11 @@
 <script id="tasklist_tpl" type="text/x-handlebars-template">
-    <tr id="task_{{id}}" class="task {{classes}}" task="{{id}}" >
+    <tr id="task_{{id}}" class="task {{classes}}" task="{{id}}" time="{{taskTime}}">
         <td>{{id}}</td>
         <td>{{name}}</td>
         <td>{{caption}}</td>
         <td>{{created}}</td>
         <td>{{timeLimit}}</td>
-        <td>00:00:00</td>
+        <td class="timer">{{timer}}</td>
         <td>
         <img src="/img/play.png"  class="start" />
         <img src="/img/pause.png" class="pause" />
