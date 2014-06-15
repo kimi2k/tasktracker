@@ -4,7 +4,7 @@
  * Date: 28.05.14
  * Time: 13:49
  */
-
+define('install',true);
 require '../protected/flight/Flight.php';
 require '../protected/init.php';
 

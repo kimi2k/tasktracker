@@ -62,9 +62,12 @@
                 <label>Category
                     <select name="category">
                         <option value="0">Not Selected</option>
-                        <?php foreach($categories as $cat) {?>
+                        <?php
+                        if (isset($categories) && !empty($categories)) {
+                        foreach($categories as $cat) {?>
                         <option value="<?php echo $cat['id']?>"><?php echo $cat['title']?></option>
-                        <? }?>
+                        <? }
+                        }?>
                     </select>
                 </label>
             </div>
