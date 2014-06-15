@@ -21,13 +21,15 @@ class Tasks
             $arr = array();
             foreach ($arFilter as $key => $val) {
                 if ($key[0] == '%') {
-
                     $arr[] = substr($key, 1, strlen($key)) . " LIKE '%" . $val . "%'";
-                } else {
+                } elseif(substr($key, 0, 2) == 'IN') {
+                    $arr[] = substr($key, 2, strlen($key)) . " IN (" . $val . ")";
+                }
+                else {
                     $arr[] = $key . "=" . $this->db->quote($val);
                 }
             }
-            $sql .= " WHERE " . implode(", ", $arr);
+            $sql .= " WHERE " . implode("AND ", $arr);
         }
         if ($arOrder) {
             $sql .= " ORDER BY " . $arOrder[0] . " " . $arOrder[1];

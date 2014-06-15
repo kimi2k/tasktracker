@@ -129,7 +129,7 @@
                 <label>Categories:</label>
                 <div class="category_filter small">
                     <?php foreach ($categories as $cat):?>
-                    <div> <input type="checkbox" value="<?php echo $cat['id']?>"> <?php echo $cat['title']?></div>
+                    <div> <input type="checkbox" value="<?php echo $cat['id']?>" name="categories[]" <?php echo (isset($_REQUEST['categories']) && in_array($cat['id'],$_REQUEST['categories']))?"checked=checked":""?>> <?php echo $cat['title']?></div>
                     <?php endforeach; ?>
                 </div>
                 <? endif; ?>

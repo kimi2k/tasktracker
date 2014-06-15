@@ -29,6 +29,9 @@ Flight::route('POST /ajax/tasks', function(){
                 if (isset($_REQUEST['created'])) {
                     $params['%created'] = $_REQUEST['created'];
                 }
+                if (isset($_REQUEST['categories'])) {
+                    $params['INcat_id'] = $_REQUEST['categories'];
+                }
                 $list = $tasks->getList($params);
                 Flight::json($list);
                 break;
