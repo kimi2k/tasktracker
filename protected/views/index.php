@@ -6,11 +6,12 @@
         <td>{{created}}</td>
         <td class="limit">{{timeLimit}}</td>
         <td class="timer">{{timer}}</td>
-        <td>
-        <img src="/img/play.png"  class="start" />
-        <img src="/img/pause.png" class="pause" />
-        <img src="/img/finish_flag.png" class="finish" />
-        <img src="/img/delete.png" class='delete' id="{{id}}"/>
+        <td style='width:88px'>
+        <img src="/img/play.png"  class="start" title="start" alt="start"/>
+        <img src="/img/pause.png" class="pause" title="pause" alt="pause" />
+        <img src="/img/finish_flag.png" class="finish" title="finish" alt="finish" />
+        <img src="/img/delete.png" class='delete' id="{{id}}" title="delete" alt="delete" />
+        <img src="/img/reload.png" class='revert' id="{{id}}" title="revert" alt="revert" />
         </td>
     </tr>
 </script>

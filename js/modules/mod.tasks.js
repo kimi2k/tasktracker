@@ -70,9 +70,7 @@
                     }
                     if (list[x].finished != 1 && list[x].is_paused != 1 && list[x].start != null) {
                            classes += ' active';
-
                     }
-
                     var context = {
                         id: list[x].id,
                         name: list[x].name,
@@ -99,6 +97,9 @@
                 self.list.find("img.finish").on('click', function(){
                     self.finishTask($(this).parent().parent().attr('task'));
                 });
+                self.list.find("img.revert").on('click', function(){
+                    self.revertTask($(this).parent().parent().attr('task'));
+                });
 
                 //checking active task
                 if (self.list.find(".active").length >0) {
@@ -124,6 +125,7 @@
             p.caption = self.addTaskForm.find('textarea[name="description"]').val();
             p.time_limit = timeLimit;
             p.cat_id = self.addTaskForm.find('select[name="category"]').val();
+            p.created = self.date+date(' H:i:s');
             error = false;
             if (p.title == '') {
                 error = true;
@@ -233,7 +235,6 @@
 
             if (confirm("Are you really want finish task №"+id)) {
                 $.post('/ajax/tasks?action=finish',{id:id},function(data){
-                    console.log(data);
                     self.printTasks();
                 })
                 var $task = self.list.find('.task[task='+id+']');
@@ -242,6 +243,14 @@
                 $task.find('.start').hide();
 
             }
+            return self;
+        },
+
+        revertTask : function(id) {
+            var self = this;
+            $.post('/ajax/tasks?action=revert',{id:id},function(data){
+                self.printTasks();
+            })
             return self;
         }
 

@@ -90,6 +90,14 @@ Flight::route('POST /ajax/tasks', function(){
                     Flight::json(array("error"=>true, "errorDescription"=>'task id is missing'));
                 }
                 break;
+            case 'revert':
+                if (isset($_POST['id'])) {
+                    $r = $tasks->revertTask($_POST['id']);
+                    Flight::json(array('result'=>$r));
+                } else {
+                    Flight::json(array("error"=>true, "errorDescription"=>'task id is missing'));
+                }
+                break;
             default:
                 Flight::json(array("error"=>true,"errorDescription"=>"Unknown action"));
                 break;
