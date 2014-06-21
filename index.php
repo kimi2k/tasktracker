@@ -17,6 +17,26 @@ Flight::route('/', function(){
     Flight::render("layout");
 });
 
+Flight::route('/statistics', function(){
+    Flight::register('Statistics', 'Statistics',array(Flight::get('db')));
+    $arr = array();
+    $arr['jsModules'] = array('mod.statistics');
+    $arr['month'] = date('m');
+    $arr['year'] = date('Y');
+    if (isset($_REQUEST['month'])) {
+        $arr['month'] =$_REQUEST['month'];
+    }
+    if (isset($_REQUEST['year'])) {
+        $arr['year'] = $_REQUEST['year'];
+    }
+    $start = mktime(0,0,0,$arr['month'],1,$arr['year']);
+    $end = mktime(0,0,0,$arr['month'],date('t',$start),$arr['year']);
+
+    $arr['list'] = Flight::Statistics()->getTimeByProject($start, $end);
+    Flight::render("statistics",$arr,"body_content");
+    Flight::render("layout");
+});
+
 //POST
 Flight::route('POST /ajax/tasks', function(){
 
