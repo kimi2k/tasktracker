@@ -146,8 +146,13 @@ class Tasks
             $paused += time()-strtotime($task['end']);
         }
         $total = time() - strtotime($task['start']) - $paused;
-        $sql = "UPDATE tasks SET is_paused=0, end='".date('Y-m-d H:i:s')."',
+        $sql = "UPDATE tasks SET is_paused=1, end='".date('Y-m-d H:i:s')."',
         totaltime='".$total."', paused='".$paused."', finished=1 WHERE id=".intval($id);
+        return $this->db->query($sql);
+    }
+
+    public function  revertTask($id) {
+        $sql = "UPDATE tasks SET finished=0 WHERE id=".intval($id);
         return $this->db->query($sql);
     }
 }

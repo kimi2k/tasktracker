@@ -45,13 +45,19 @@ div.category_filter.small {
 #tasklist .expired td {
     background: lightcoral;
 }
+
 #tasklist .finish td .delete,
 #tasklist .finish td .finish,
 #tasklist .finish td .start {
     display: none;
 }
-
-
+#tasklist td .revert {
+    display: none;
+}
+#tasklist .finish td .revert {
+    display: inline-block;
+}
+#tasklist td .revert,
 #tasklist  td .delete,
 #tasklist  td .finish,
 #tasklist  td .pause,
